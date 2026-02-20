@@ -42,3 +42,4 @@ jobs:
           name: api-docs
           path: docs/
           retention-days: 30
+          overwrite: true
