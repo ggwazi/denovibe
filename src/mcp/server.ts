@@ -240,7 +240,10 @@ function callTool(name: string, toolArgs: unknown): Promise<ToolResult> {
     case 'run_task':
       return handleRunTask(a as { task: string; args?: string[] });
     default:
-      return Promise.resolve({ content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true });
+      return Promise.resolve({
+        content: [{ type: 'text', text: `Unknown tool: ${name}` }],
+        isError: true,
+      });
   }
 }
 

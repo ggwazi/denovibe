@@ -3,8 +3,7 @@
 
 import { router as handleRequest } from './router.ts';
 
-const makeReq = (path: string) =>
-  new Request(`http://localhost:8000${path}`, { method: 'GET' });
+const makeReq = (path: string) => new Request(`http://localhost:8000${path}`, { method: 'GET' });
 
 Deno.bench('GET / (homepage)', async () => {
   await handleRequest(makeReq('/'));
