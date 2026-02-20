@@ -1,0 +1,25 @@
+name: Skill Dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      task:
+        description: 'Deno task to run (test/lint/fmt/check)'
+        required: true
+        type: choice
+        options: [test, lint, fmt, check, start]
+      args:
+        description: 'Additional arguments'
+        required: false
+        type: string
+jobs:
+  run-skill:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Run deno task
+        run: deno task ${{ inputs.task }} ${{ inputs.args }}

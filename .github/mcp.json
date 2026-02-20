@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "denovibe-tools": {
+      "command": "deno",
+      "args": ["task", "mcp"],
+      "description": "Deno development tools: run tests, lint, format, type-check, inspect routes",
+      "tools": ["run_tests", "run_lint", "run_fmt", "type_check", "get_routes", "run_task"]
+    }
+  }
+}

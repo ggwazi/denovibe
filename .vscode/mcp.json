@@ -1,0 +1,10 @@
+{
+  "servers": {
+    "denovibe": {
+      "type": "stdio",
+      "command": "deno",
+      "args": ["task", "mcp"],
+      "env": {}
+    }
+  }
+}

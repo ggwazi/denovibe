@@ -1,0 +1,29 @@
+name: denovibe-agent
+version: 0.1.0
+description: |
+  A Deno 2 development agent that can run tests, lint, format, type-check,
+  and manage GitHub Actions workflows for the denovibe project.
+runtime: deno
+entrypoint: src/agent/main.ts
+capabilities:
+  - code_analysis
+  - test_execution
+  - workflow_dispatch
+  - mcp_tools
+skills:
+  - id: deno-test
+    path: .github/skills/deno-test.yml
+  - id: deno-lint
+    path: .github/skills/deno-lint.yml
+  - id: deno-release
+    path: .github/skills/deno-release.yml
+  - id: deno-deploy
+    path: .github/skills/deno-deploy.yml
+mcp_servers:
+  - name: denovibe-tools
+    config: .github/mcp.json
+permissions:
+  - contents: read
+  - actions: write
+  - issues: write
+  - pull-requests: write

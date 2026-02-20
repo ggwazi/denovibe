@@ -1,0 +1,25 @@
+name: Deploy / Start Server
+description: Deploys or starts the Deno server with the specified port and environment
+id: deno-deploy
+trigger:
+  - deploy
+  - start server
+  - run server
+parameters:
+  port:
+    type: number
+    description: Port the server will listen on
+    default: 8000
+  env:
+    type: string
+    description: Target environment (dev or prod)
+    default: dev
+    enum:
+      - dev
+      - prod
+action:
+  local:
+    command: deno task start
+    env:
+      PORT: "{{ port }}"
+      APP_ENV: "{{ env }}"

@@ -1,0 +1,26 @@
+name: Create Deno Release
+description: Tags a new release and triggers the release workflow
+id: deno-release
+trigger:
+  - create release
+  - publish release
+  - tag release
+parameters:
+  version:
+    type: string
+    description: Semantic version for the release (e.g. 1.2.3)
+    required: true
+  prerelease:
+    type: boolean
+    description: Mark this release as a pre-release
+    default: false
+action:
+  workflow: .github/workflows/release.yml
+  local:
+    command: gh workflow run release.yml
+    args:
+      - name: --field
+        value: "version={{ version }}"
+      - name: --field
+        condition: "{{ prerelease }}"
+        value: "prerelease=true"

@@ -1,0 +1,28 @@
+name: Run Deno Tests
+description: Executes the Deno test suite and reports results
+id: deno-test
+trigger:
+  - run tests
+  - deno test
+  - check tests
+parameters:
+  coverage:
+    type: boolean
+    description: Generate coverage report
+    default: false
+  filter:
+    type: string
+    description: Filter tests by name pattern
+    default: ""
+action:
+  workflow: .github/workflows/ci.yml
+  job: test
+  local:
+    command: deno task test
+    args:
+      - name: --coverage
+        condition: "{{ coverage }}"
+        value: coverage/
+      - name: --filter
+        condition: "{{ filter != '' }}"
+        value: "{{ filter }}"

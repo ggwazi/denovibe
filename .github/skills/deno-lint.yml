@@ -1,0 +1,29 @@
+name: Run Deno Lint and Format Check
+description: Runs deno lint and deno fmt --check to validate code style and quality
+id: deno-lint
+trigger:
+  - run lint
+  - deno lint
+  - check formatting
+  - lint and format
+parameters:
+  fix:
+    type: boolean
+    description: Auto-fix formatting issues with deno fmt (lint issues cannot be auto-fixed)
+    default: false
+  filter:
+    type: string
+    description: Limit lint/fmt to a specific file or directory path
+    default: ""
+action:
+  workflow: .github/workflows/ci.yml
+  job: lint
+  local:
+    command: deno task lint
+    args:
+      - name: --fmt-fix
+        condition: "{{ fix }}"
+        value: ""
+      - name: --path
+        condition: "{{ filter != '' }}"
+        value: "{{ filter }}"
