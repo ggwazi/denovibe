@@ -22,7 +22,7 @@ jobs:
     name: Validate OpenAPI spec
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - name: Validate OpenAPI schema
         uses: char0n/swagger-editor-validate@v1
         with:
@@ -32,7 +32,7 @@ jobs:
     name: Validate Deno types
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x

@@ -15,8 +15,8 @@ jobs:
     name: Lint Markdown
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: DavidAnson/markdownlint-cli2-action@v17
+      - uses: actions/checkout@v6
+      - uses: DavidAnson/markdownlint-cli2-action@v22
         with:
           config: .github/linters/.markdownlint.yml
           globs: '**/*.md'
@@ -25,7 +25,7 @@ jobs:
     name: Lint YAML
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ibiqlik/action-yamllint@v3
         with:
           config_file: .github/linters/.yamllint.yml
@@ -36,12 +36,12 @@ jobs:
     name: Lint Deno/TypeScript
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: denoland/setup-deno@v2
         with:
           deno-version: v2.x
       - name: Cache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: .deno-cache
           key: deno-${{ hashFiles('deno.lock') }}
