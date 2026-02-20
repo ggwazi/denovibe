@@ -1,0 +1,68 @@
+name: Coverage Report
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  coverage:
+    name: Test Coverage
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: .deno-cache
+          key: deno-${{ hashFiles('deno.lock') }}
+          restore-keys: deno-
+        env:
+          DENO_DIR: .deno-cache
+
+      - name: Run tests with coverage
+        env:
+          DENO_DIR: .deno-cache
+        run: deno test --allow-net --allow-read --allow-env --allow-run --coverage=coverage/
+
+      - name: Generate LCOV report
+        env:
+          DENO_DIR: .deno-cache
+        run: deno coverage coverage/ --lcov --output=coverage/lcov.info
+
+      - name: Generate text summary
+        env:
+          DENO_DIR: .deno-cache
+        run: deno coverage coverage/ 2>&1 | tee coverage/summary.txt
+
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage/
+          retention-days: 30
+
+      - name: Post coverage summary to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = fs.readFileSync('coverage/summary.txt', 'utf8');
+            const body = `## 📊 Coverage Report\n\n\`\`\`\n${summary}\n\`\`\``;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

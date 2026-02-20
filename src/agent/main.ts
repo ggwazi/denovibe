@@ -42,7 +42,7 @@ EXAMPLES
 `.trimStart());
 }
 
-async function dispatch(skillId: SkillId, args: ReturnType<typeof parseArgs>): Promise<SkillResult> {
+function dispatch(skillId: SkillId, args: ReturnType<typeof parseArgs>): Promise<SkillResult> {
   switch (skillId) {
     case 'deno-test':
       return test(args['filter'] as string | undefined, args['coverage'] as boolean | undefined);
@@ -59,7 +59,11 @@ async function dispatch(skillId: SkillId, args: ReturnType<typeof parseArgs>): P
     case 'deno-release': {
       const version = args['version'] as string | undefined;
       if (!version) {
-        return { success: false, output: 'Error: --version is required for deno-release', exitCode: 1 };
+        return {
+          success: false,
+          output: 'Error: --version is required for deno-release',
+          exitCode: 1,
+        };
       }
       return release(version, args['prerelease'] as boolean | undefined);
     }

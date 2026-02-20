@@ -13,7 +13,7 @@ parameters:
   filter:
     type: string
     description: Filter tests by name pattern
-    default: ""
+    default: ''
 action:
   workflow: .github/workflows/ci.yml
   job: test
@@ -21,8 +21,8 @@ action:
     command: deno task test
     args:
       - name: --coverage
-        condition: "{{ coverage }}"
+        condition: '{{ coverage }}'
         value: coverage/
       - name: --filter
         condition: "{{ filter != '' }}"
-        value: "{{ filter }}"
+        value: '{{ filter }}'

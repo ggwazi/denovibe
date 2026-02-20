@@ -10,7 +10,9 @@
 
 **Please do NOT open a public GitHub issue for security vulnerabilities.**
 
-Use [GitHub private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability) to disclose security issues confidentially:
+Use
+[GitHub private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability)
+to disclose security issues confidentially:
 
 1. Navigate to the **Security** tab of this repository.
 2. Click **"Report a vulnerability"**.
@@ -18,13 +20,14 @@ Use [GitHub private vulnerability reporting](https://docs.github.com/en/code-sec
 
 ### Response Timeline
 
-| Severity | Acknowledgement | Patch Target |
-| -------- | --------------- | ------------ |
-| Critical | Within 48 hours | Within 30 days |
-| High     | Within 48 hours | Within 60 days |
-| Medium / Low | Within 5 business days | Best effort |
+| Severity     | Acknowledgement        | Patch Target   |
+| ------------ | ---------------------- | -------------- |
+| Critical     | Within 48 hours        | Within 30 days |
+| High         | Within 48 hours        | Within 60 days |
+| Medium / Low | Within 5 business days | Best effort    |
 
-We will keep you informed of progress and notify you when a fix is released. We ask that you observe responsible disclosure and refrain from public disclosure until a patch is available.
+We will keep you informed of progress and notify you when a fix is released. We ask that you observe
+responsible disclosure and refrain from public disclosure until a patch is available.
 
 ## Out of Scope
 

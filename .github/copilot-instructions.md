@@ -2,10 +2,9 @@
 
 ## Project Overview
 
-**denovibe** is a Deno 2 HTTP server and DevOps boilerplate template. It provides a
-production-ready starting point for building HTTP APIs with Deno, including a built-in MCP
-(Model Context Protocol) server for Copilot tool use, GitHub Actions CI/CD, and a set of
-reusable Copilot skills.
+**denovibe** is a Deno 2 HTTP server and DevOps boilerplate template. It provides a production-ready
+starting point for building HTTP APIs with Deno, including a built-in MCP (Model Context Protocol)
+server for Copilot tool use, GitHub Actions CI/CD, and a set of reusable Copilot skills.
 
 ---
 
@@ -25,17 +24,20 @@ reusable Copilot skills.
 ## Coding Conventions
 
 ### Imports
+
 - Use `jsr:@std/*` for all standard library imports (e.g., `jsr:@std/assert`, `jsr:@std/path`).
 - Map short specifiers in `deno.json` `imports` map; reference them as bare specifiers in source.
 - Never use `require()`, CommonJS, or `npm:` unless a package has no JSR/HTTPS equivalent.
 - Never use `import type` for value imports.
 
 ### Variables & Types
+
 - Use `const` over `let`; never use `var`.
 - No `any` — use `unknown` and narrow with `instanceof` / type guards, or define proper types.
 - Explicit return types on all exported / public functions.
 
 ### Style
+
 - `async/await` over raw Promises.
 - Prefer named exports over default exports.
 - File naming: `snake_case` for files, `PascalCase` for classes.
@@ -43,6 +45,7 @@ reusable Copilot skills.
 - Line width: 100 characters. Indent: 2 spaces. Quotes: single.
 
 ### Error Handling
+
 Always type-narrow errors before accessing properties:
 
 ```ts
@@ -60,6 +63,7 @@ try {
 ## Deno-Specific Patterns
 
 ### HTTP Server
+
 ```ts
 Deno.serve({ port: 8000 }, handler);
 // or
@@ -67,6 +71,7 @@ Deno.serve({ port: Number(Deno.env.get('PORT') ?? '8000') }, handler);
 ```
 
 ### Environment Variables
+
 ```ts
 // ✅ correct
 const apiKey = Deno.env.get('API_KEY');
@@ -76,22 +81,25 @@ const apiKey = process.env.API_KEY;
 ```
 
 ### File I/O
+
 ```ts
 const text = await Deno.readTextFile('./data.json');
 await Deno.writeTextFile('./out.json', JSON.stringify(data));
 ```
 
 ### Permissions
-Always declare permissions explicitly in `deno.json` tasks rather than using `--allow-all`.
-Example: `--allow-net --allow-read --allow-env`.
+
+Always declare permissions explicitly in `deno.json` tasks rather than using `--allow-all`. Example:
+`--allow-net --allow-read --allow-env`.
 
 ### Standard Library Modules
-| Need            | Import                          |
-| --------------- | ------------------------------- |
-| Path utilities  | `jsr:@std/path`                 |
-| Terminal colors | `jsr:@std/fmt/colors`           |
-| Assertions      | `jsr:@std/assert`               |
-| HTTP utilities  | `jsr:@std/http`                 |
+
+| Need            | Import                |
+| --------------- | --------------------- |
+| Path utilities  | `jsr:@std/path`       |
+| Terminal colors | `jsr:@std/fmt/colors` |
+| Assertions      | `jsr:@std/assert`     |
+| HTTP utilities  | `jsr:@std/http`       |
 
 ---
 
@@ -145,8 +153,8 @@ const { stdout, stderr } = await cmd.output();
 
 - Skill definitions live in `.github/skills/` as YAML files.
 - Each skill maps to a `deno task` or a GitHub Actions workflow dispatch.
-- Skills can be invoked by Copilot during coding sessions to run checks, generate
-  boilerplate, or trigger CI.
+- Skills can be invoked by Copilot during coding sessions to run checks, generate boilerplate, or
+  trigger CI.
 - Skill YAML fields: `name`, `description`, `triggers`, `action`.
 
 ---
@@ -182,16 +190,16 @@ denovibe/
 
 ## What NOT To Do
 
-| ❌ Never                              | ✅ Instead                          |
-| ------------------------------------- | ----------------------------------- |
+| ❌ Never                              | ✅ Instead                         |
+| ------------------------------------- | ---------------------------------- |
 | `require('module')`                   | `import { x } from 'jsr:...'`      |
-| `process.env.FOO`                     | `Deno.env.get('FOO')`               |
-| `package.json` / `node_modules/`      | `deno.json` import map              |
-| `npm install` / `yarn add`            | Add to `deno.json` imports          |
-| `npm:` prefix (unless no alternative) | `jsr:` or `https://` URL            |
-| `ts-node` / `tsx`                     | `deno run file.ts`                  |
-| Jest / Mocha / Vitest                 | `Deno.test` + `jsr:@std/assert`     |
-| `--allow-all` in production tasks     | Explicit permission flags           |
-| `any` type                            | `unknown` + type narrowing          |
-| `var`                                 | `const` (or `let` if reassignment)  |
-| Default exports                       | Named exports                       |
+| `process.env.FOO`                     | `Deno.env.get('FOO')`              |
+| `package.json` / `node_modules/`      | `deno.json` import map             |
+| `npm install` / `yarn add`            | Add to `deno.json` imports         |
+| `npm:` prefix (unless no alternative) | `jsr:` or `https://` URL           |
+| `ts-node` / `tsx`                     | `deno run file.ts`                 |
+| Jest / Mocha / Vitest                 | `Deno.test` + `jsr:@std/assert`    |
+| `--allow-all` in production tasks     | Explicit permission flags          |
+| `any` type                            | `unknown` + type narrowing         |
+| `var`                                 | `const` (or `let` if reassignment) |
+| Default exports                       | Named exports                      |

@@ -20,7 +20,7 @@ action:
     command: gh workflow run release.yml
     args:
       - name: --field
-        value: "version={{ version }}"
+        value: 'version={{ version }}'
       - name: --field
-        condition: "{{ prerelease }}"
-        value: "prerelease=true"
+        condition: '{{ prerelease }}'
+        value: 'prerelease=true'

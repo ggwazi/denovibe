@@ -30,11 +30,13 @@ deno task test
 This project uses Deno's built-in formatter and linter.
 
 **Format code:**
+
 ```sh
 deno task fmt
 ```
 
 **Lint code:**
+
 ```sh
 deno task lint
 ```
@@ -51,17 +53,18 @@ We use [Conventional Commits](https://www.conventionalcommits.org/):
 
 **Types:**
 
-| Type       | Description                                    |
-|------------|------------------------------------------------|
-| `feat`     | A new feature                                  |
-| `fix`      | A bug fix                                      |
-| `docs`     | Documentation changes only                     |
-| `chore`    | Build process, tooling, or dependency updates  |
-| `refactor` | Code change that is neither a fix nor feature  |
-| `test`     | Adding or updating tests                       |
-| `ci`       | CI/CD configuration changes                    |
+| Type       | Description                                   |
+| ---------- | --------------------------------------------- |
+| `feat`     | A new feature                                 |
+| `fix`      | A bug fix                                     |
+| `docs`     | Documentation changes only                    |
+| `chore`    | Build process, tooling, or dependency updates |
+| `refactor` | Code change that is neither a fix nor feature |
+| `test`     | Adding or updating tests                      |
+| `ci`       | CI/CD configuration changes                   |
 
 **Examples:**
+
 ```
 feat(auth): add JWT token refresh
 fix(router): handle trailing slash correctly
@@ -70,12 +73,12 @@ docs: update contributing guide
 
 ## Branch Naming Conventions
 
-| Prefix    | Use for                          |
-|-----------|----------------------------------|
-| `feat/`   | New features                     |
-| `fix/`    | Bug fixes                        |
-| `docs/`   | Documentation changes            |
-| `chore/`  | Tooling, deps, or config changes |
+| Prefix   | Use for                          |
+| -------- | -------------------------------- |
+| `feat/`  | New features                     |
+| `fix/`   | Bug fixes                        |
+| `docs/`  | Documentation changes            |
+| `chore/` | Tooling, deps, or config changes |
 
 **Example:** `feat/add-websocket-support`
 

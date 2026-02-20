@@ -7,10 +7,10 @@ Copilot Workspace session (or any fresh machine).
 
 ## Prerequisites
 
-| Tool    | Version  | Install                                         |
-| ------- | -------- | ----------------------------------------------- |
-| Deno    | ≥ 2.0.0  | `curl -fsSL https://deno.land/install.sh \| sh` |
-| Git     | any      | pre-installed in most environments              |
+| Tool | Version | Install                                         |
+| ---- | ------- | ----------------------------------------------- |
+| Deno | ≥ 2.0.0 | `curl -fsSL https://deno.land/install.sh \| sh` |
+| Git  | any     | pre-installed in most environments              |
 
 Verify Deno is available:
 
@@ -19,8 +19,8 @@ deno --version
 # deno 2.x.x (release, ...)
 ```
 
-> **Note:** This project does **not** use Node.js, npm, or any build toolchain.
-> Do not run `npm install` or create a `package.json`.
+> **Note:** This project does **not** use Node.js, npm, or any build toolchain. Do not run
+> `npm install` or create a `package.json`.
 
 ---
 
@@ -64,14 +64,14 @@ This runs `deno check src/main.ts` (TypeScript type checking, no emit).
 
 ## Daily Workflow
 
-| Goal                        | Command               |
-| --------------------------- | --------------------- |
-| Start dev server (watch)    | `deno task dev`       |
-| Run tests                   | `deno task test`      |
-| Format code                 | `deno task fmt`       |
-| Lint code                   | `deno task lint`      |
-| Type-check only             | `deno task check`     |
-| Start production server     | `deno task start`     |
+| Goal                     | Command           |
+| ------------------------ | ----------------- |
+| Start dev server (watch) | `deno task dev`   |
+| Run tests                | `deno task test`  |
+| Format code              | `deno task fmt`   |
+| Lint code                | `deno task lint`  |
+| Type-check only          | `deno task check` |
+| Start production server  | `deno task start` |
 
 ---
 
@@ -89,17 +89,17 @@ Test files follow the `*_test.ts` naming convention and are co-located with sour
 
 ## Environment Variables
 
-All configuration is passed through environment variables. Copy `.env.example` to `.env`
-before running the server locally:
+All configuration is passed through environment variables. Copy `.env.example` to `.env` before
+running the server locally:
 
 ```sh
 cp .env.example .env
 ```
 
-| Variable   | Default | Description                         |
-| ---------- | ------- | ----------------------------------- |
-| `PORT`     | `8000`  | Port the HTTP server listens on     |
-| `LOG_LEVEL`| `info`  | Logging verbosity (`debug`/`info`)  |
+| Variable    | Default | Description                        |
+| ----------- | ------- | ---------------------------------- |
+| `PORT`      | `8000`  | Port the HTTP server listens on    |
+| `LOG_LEVEL` | `info`  | Logging verbosity (`debug`/`info`) |
 
 Access variables in code with `Deno.env.get('PORT')` — never `process.env`.
 
@@ -107,9 +107,9 @@ Access variables in code with `Deno.env.get('PORT')` — never `process.env`.
 
 ## VS Code
 
-Install the recommended extensions when prompted (see `.vscode/extensions.json`).
-The workspace settings in `.vscode/settings.json` enable the Deno language server,
-format-on-save, and JSR import suggestions automatically.
+Install the recommended extensions when prompted (see `.vscode/extensions.json`). The workspace
+settings in `.vscode/settings.json` enable the Deno language server, format-on-save, and JSR import
+suggestions automatically.
 
 ---
 

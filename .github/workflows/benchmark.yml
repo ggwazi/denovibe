@@ -1,0 +1,64 @@
+name: Benchmark
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  benchmark:
+    name: Performance Benchmark
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Cache Deno dependencies
+        uses: actions/cache@v4
+        with:
+          path: .deno-cache
+          key: deno-${{ hashFiles('deno.lock') }}
+          restore-keys: deno-
+        env:
+          DENO_DIR: .deno-cache
+
+      - name: Run benchmarks
+        env:
+          DENO_DIR: .deno-cache
+        run: |
+          if find . -name '*_bench.ts' | grep -q .; then
+            deno bench --allow-net --allow-read --allow-env 2>&1 | tee benchmark-results.txt
+          else
+            echo "No benchmark files found (*_bench.ts). Skipping." | tee benchmark-results.txt
+          fi
+
+      - name: Upload benchmark results
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results.txt
+          retention-days: 30
+
+      - name: Post benchmark summary to PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const results = fs.readFileSync('benchmark-results.txt', 'utf8');
+            const body = `## ⚡ Benchmark Results\n\n\`\`\`\n${results}\n\`\`\``;
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body,
+            });

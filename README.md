@@ -26,14 +26,14 @@ deno task dev
 
 ## Available Tasks
 
-| Task    | Command          | Description                              |
-| ------- | ---------------- | ---------------------------------------- |
-| `start` | `deno task start` | Run the HTTP server                     |
-| `dev`   | `deno task dev`   | Run with file watcher (hot reload)      |
-| `test`  | `deno task test`  | Run all tests                           |
-| `lint`  | `deno task lint`  | Lint source files                       |
-| `fmt`   | `deno task fmt`   | Format source files                     |
-| `check` | `deno task check` | Type-check without running              |
+| Task    | Command           | Description                        |
+| ------- | ----------------- | ---------------------------------- |
+| `start` | `deno task start` | Run the HTTP server                |
+| `dev`   | `deno task dev`   | Run with file watcher (hot reload) |
+| `test`  | `deno task test`  | Run all tests                      |
+| `lint`  | `deno task lint`  | Lint source files                  |
+| `fmt`   | `deno task fmt`   | Format source files                |
+| `check` | `deno task check` | Type-check without running         |
 
 ## Project Structure
 
@@ -66,15 +66,15 @@ denovibe/
 
 ## GitHub Actions Workflows
 
-| Workflow | Trigger | Description |
-| -------- | ------- | ----------- |
-| **CI** | push, pull_request | Runs `deno lint`, `deno fmt --check`, `deno check`, and `deno test` |
-| **CodeQL** | push, schedule | Static security analysis via GitHub CodeQL |
-| **Release** | push to `main` | Creates versioned GitHub releases |
-| **PR Check** | pull_request | Validates PR title conforms to Conventional Commits |
-| **Labeler** | pull_request | Applies labels based on changed file paths |
-| **Stale** | schedule | Closes stale issues/PRs after inactivity |
-| **Auto-assign** | pull_request | Assigns reviewers automatically |
+| Workflow        | Trigger            | Description                                                         |
+| --------------- | ------------------ | ------------------------------------------------------------------- |
+| **CI**          | push, pull_request | Runs `deno lint`, `deno fmt --check`, `deno check`, and `deno test` |
+| **CodeQL**      | push, schedule     | Static security analysis via GitHub CodeQL                          |
+| **Release**     | push to `main`     | Creates versioned GitHub releases                                   |
+| **PR Check**    | pull_request       | Validates PR title conforms to Conventional Commits                 |
+| **Labeler**     | pull_request       | Applies labels based on changed file paths                          |
+| **Stale**       | schedule           | Closes stale issues/PRs after inactivity                            |
+| **Auto-assign** | pull_request       | Assigns reviewers automatically                                     |
 
 ## Contributing
 

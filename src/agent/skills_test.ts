@@ -1,6 +1,5 @@
 import { assertEquals } from '@std/assert';
-import { runCommand, type SkillResult } from './skills.ts';
-import { fmt, lint, release, test, typeCheck } from './skills.ts';
+import { fmt, lint, runCommand, type SkillResult, test, typeCheck } from './skills.ts';
 
 // ---------------------------------------------------------------------------
 // Stub helpers
@@ -14,11 +13,11 @@ function makeStub(responses: SkillResult[]): { calls: string[][]; fn: RunCommand
   let index = 0;
   return {
     calls,
-    fn: async (cmd: string[]) => {
+    fn: (cmd: string[]) => {
       calls.push(cmd);
       const result = responses[index] ?? { success: true, output: '', exitCode: 0 };
       index++;
-      return result;
+      return Promise.resolve(result);
     },
   };
 }

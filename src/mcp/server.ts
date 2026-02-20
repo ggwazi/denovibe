@@ -52,7 +52,8 @@ const TOOLS = [
   },
   {
     name: 'run_lint',
-    description: 'Run Deno linter using `deno task lint`. Returns lint output and pass/fail status.',
+    description:
+      'Run Deno linter using `deno task lint`. Returns lint output and pass/fail status.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -223,7 +224,7 @@ export async function handleRunTask(
 // JSON-RPC dispatch
 // ---------------------------------------------------------------------------
 
-async function callTool(name: string, toolArgs: unknown): Promise<ToolResult> {
+function callTool(name: string, toolArgs: unknown): Promise<ToolResult> {
   const a = (toolArgs ?? {}) as Record<string, unknown>;
   switch (name) {
     case 'run_tests':
@@ -239,20 +240,20 @@ async function callTool(name: string, toolArgs: unknown): Promise<ToolResult> {
     case 'run_task':
       return handleRunTask(a as { task: string; args?: string[] });
     default:
-      return { content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true };
+      return Promise.resolve({ content: [{ type: 'text', text: `Unknown tool: ${name}` }], isError: true });
   }
 }
 
-async function dispatch(request: McpRequest): Promise<unknown> {
+function dispatch(request: McpRequest): Promise<unknown> {
   switch (request.method) {
     case 'initialize':
-      return {
+      return Promise.resolve({
         protocolVersion: '2024-11-05',
         capabilities: { tools: {} },
         serverInfo: { name: 'denovibe-tools', version: '0.1.0' },
-      };
+      });
     case 'tools/list':
-      return { tools: TOOLS };
+      return Promise.resolve({ tools: TOOLS });
     case 'tools/call': {
       const params = request.params as { name: string; arguments?: unknown };
       return callTool(params.name, params.arguments);

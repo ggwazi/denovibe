@@ -27,7 +27,7 @@ export async function runCommand(
 /**
  * Run `deno task test` with optional name filter and coverage collection.
  */
-export async function test(filter?: string, coverage?: boolean): Promise<SkillResult> {
+export function test(filter?: string, coverage?: boolean): Promise<SkillResult> {
   const cmd = ['deno', 'task', 'test'];
   if (coverage) cmd.push('--coverage=coverage/');
   if (filter) cmd.push('--filter', filter);
@@ -52,7 +52,7 @@ export async function lint(fix?: boolean): Promise<SkillResult> {
 /**
  * Run `deno fmt` or `deno fmt --check` (check-only mode).
  */
-export async function fmt(check?: boolean): Promise<SkillResult> {
+export function fmt(check?: boolean): Promise<SkillResult> {
   const cmd = check ? ['deno', 'fmt', '--check'] : ['deno', 'task', 'fmt'];
   return runCommand(cmd);
 }
@@ -60,7 +60,7 @@ export async function fmt(check?: boolean): Promise<SkillResult> {
 /**
  * Run `deno task check` (type-check the project).
  */
-export async function typeCheck(): Promise<SkillResult> {
+export function typeCheck(): Promise<SkillResult> {
   return runCommand(['deno', 'task', 'check']);
 }
 
@@ -95,8 +95,12 @@ export async function release(version: string, prerelease?: boolean): Promise<Sk
   }
 
   const ghArgs = [
-    'gh', 'workflow', 'run', 'release.yml',
-    '--field', `version=${tag}`,
+    'gh',
+    'workflow',
+    'run',
+    'release.yml',
+    '--field',
+    `version=${tag}`,
   ];
   if (prerelease) ghArgs.push('--field', 'prerelease=true');
 

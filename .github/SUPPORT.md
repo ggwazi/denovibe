@@ -2,11 +2,11 @@
 
 ## Where to Get Help
 
-| Channel | Use for |
-| ------- | ------- |
-| [GitHub Discussions — Q&A](../../discussions/categories/q-a) | General questions, how-to, ideas |
-| [GitHub Issues](../../issues) | **Confirmed bugs and feature requests only** |
-| Stack Overflow [`denovibe`](https://stackoverflow.com/questions/tagged/denovibe) | Public Q&A visible to the broader community |
+| Channel                                                                          | Use for                                      |
+| -------------------------------------------------------------------------------- | -------------------------------------------- |
+| [GitHub Discussions — Q&A](../../discussions/categories/q-a)                     | General questions, how-to, ideas             |
+| [GitHub Issues](../../issues)                                                    | **Confirmed bugs and feature requests only** |
+| Stack Overflow [`denovibe`](https://stackoverflow.com/questions/tagged/denovibe) | Public Q&A visible to the broader community  |
 
 ## What NOT to Use Issues For
 

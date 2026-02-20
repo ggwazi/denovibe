@@ -14,7 +14,7 @@ parameters:
   filter:
     type: string
     description: Limit lint/fmt to a specific file or directory path
-    default: ""
+    default: ''
 action:
   workflow: .github/workflows/ci.yml
   job: lint
@@ -22,8 +22,8 @@ action:
     command: deno task lint
     args:
       - name: --fmt-fix
-        condition: "{{ fix }}"
-        value: ""
+        condition: '{{ fix }}'
+        value: ''
       - name: --path
         condition: "{{ filter != '' }}"
-        value: "{{ filter }}"
+        value: '{{ filter }}'

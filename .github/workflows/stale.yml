@@ -2,7 +2,7 @@ name: Stale Issues and PRs
 
 on:
   schedule:
-    - cron: "0 1 * * *"
+    - cron: '0 1 * * *'
 
 permissions:
   issues: write
@@ -41,5 +41,5 @@ jobs:
             with no further activity.
 
           # Exempt labels
-          exempt-issue-labels: "pinned,security,blocked"
-          exempt-pr-labels: "pinned,security,blocked"
+          exempt-issue-labels: 'pinned,security,blocked'
+          exempt-pr-labels: 'pinned,security,blocked'

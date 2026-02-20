@@ -1,0 +1,83 @@
+name: Changelog & Release Notes
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  changelog:
+    name: Generate Changelog
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Get previous tag
+        id: prev-tag
+        run: |
+          PREV=$(git tag --sort=-version:refname | sed -n '2p')
+          echo "tag=${PREV:-}" >> "$GITHUB_OUTPUT"
+
+      - name: Generate changelog from commits
+        id: changelog
+        run: |
+          CURRENT_TAG="${GITHUB_REF_NAME}"
+          PREV_TAG="${{ steps.prev-tag.outputs.tag }}"
+
+          if [ -z "$PREV_TAG" ]; then
+            RANGE="$CURRENT_TAG"
+          else
+            RANGE="${PREV_TAG}..${CURRENT_TAG}"
+          fi
+
+          echo "## What's Changed" > changelog.md
+          echo "" >> changelog.md
+
+          # Features
+          FEATS=$(git log "$RANGE" --pretty=format:"- %s (%h)" --grep="^feat" 2>/dev/null || true)
+          if [ -n "$FEATS" ]; then
+            echo "### ✨ Features" >> changelog.md
+            echo "$FEATS" >> changelog.md
+            echo "" >> changelog.md
+          fi
+
+          # Bug fixes
+          FIXES=$(git log "$RANGE" --pretty=format:"- %s (%h)" --grep="^fix" 2>/dev/null || true)
+          if [ -n "$FIXES" ]; then
+            echo "### 🐛 Bug Fixes" >> changelog.md
+            echo "$FIXES" >> changelog.md
+            echo "" >> changelog.md
+          fi
+
+          # Docs
+          DOCS=$(git log "$RANGE" --pretty=format:"- %s (%h)" --grep="^docs" 2>/dev/null || true)
+          if [ -n "$DOCS" ]; then
+            echo "### 📝 Documentation" >> changelog.md
+            echo "$DOCS" >> changelog.md
+            echo "" >> changelog.md
+          fi
+
+          # CI/chore
+          CI=$(git log "$RANGE" --pretty=format:"- %s (%h)" --grep="^\(ci\|chore\|build\)" 2>/dev/null || true)
+          if [ -n "$CI" ]; then
+            echo "### 🔧 Maintenance" >> changelog.md
+            echo "$CI" >> changelog.md
+            echo "" >> changelog.md
+          fi
+
+          echo "---" >> changelog.md
+          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_TAG}" >> changelog.md
+
+          cat changelog.md
+          echo "path=changelog.md" >> "$GITHUB_OUTPUT"
+
+      - name: Update GitHub Release with changelog
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: changelog.md
+          tag_name: ${{ github.ref_name }}

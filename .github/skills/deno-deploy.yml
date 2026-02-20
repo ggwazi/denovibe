@@ -21,5 +21,5 @@ action:
   local:
     command: deno task start
     env:
-      PORT: "{{ port }}"
-      APP_ENV: "{{ env }}"
+      PORT: '{{ port }}'
+      APP_ENV: '{{ env }}'
