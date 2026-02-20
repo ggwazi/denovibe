@@ -7,6 +7,9 @@ MD041: false
 # Disable: emphasis used as heading — intentional in prompt/instruction files
 MD036: false
 
+# Disable: fenced code block language required — many config/template files use plain fences
+MD040: false
+
 # Disable: fenced code blocks surrounded by blank lines — list-embedded code blocks are exempt
 MD031:
   list_items: false

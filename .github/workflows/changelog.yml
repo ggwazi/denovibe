@@ -71,7 +71,8 @@ jobs:
           fi
 
           echo "---" >> changelog.md
-          echo "**Full Changelog**: https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_TAG}" >> changelog.md
+          FULL_URL="https://github.com/${{ github.repository }}/compare/${PREV_TAG}...${CURRENT_TAG}"
+          echo "**Full Changelog**: ${FULL_URL}" >> changelog.md
 
           cat changelog.md
           echo "path=changelog.md" >> "$GITHUB_OUTPUT"

@@ -19,7 +19,8 @@ jobs:
           PR_TITLE: ${{ github.event.pull_request.title }}
         run: |
           echo "PR title: $PR_TITLE"
-          if echo "$PR_TITLE" | grep -qE '^(feat|fix|docs|chore|refactor|test|ci|build|perf|style|revert)(\(.+\))?!?: .+'; then
+          PATTERN='^(feat|fix|docs|chore|refactor|test|ci|build|perf|style|revert)(\(.+\))?!?: .+'
+          if echo "$PR_TITLE" | grep -qE "$PATTERN"; then
             echo "✅ PR title follows Conventional Commits format."
           else
             echo "❌ PR title does not follow Conventional Commits format."
