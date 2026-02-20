@@ -1,0 +1,28 @@
+ci:
+  - changed-files:
+    - any-glob-to-any-file:
+      - .github/workflows/**
+      - .github/dependabot.yml
+
+documentation:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "*.md"
+      - docs/**
+
+tests:
+  - changed-files:
+    - any-glob-to-any-file:
+      - "**/*_test.ts"
+      - "**/*.test.ts"
+
+source:
+  - changed-files:
+    - any-glob-to-any-file:
+      - src/**
+
+config:
+  - changed-files:
+    - any-glob-to-any-file:
+      - deno.json
+      - ".env*"

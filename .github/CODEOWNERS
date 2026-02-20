@@ -1,0 +1,11 @@
+# CODEOWNERS - Replace @owner with the actual GitHub username(s) or team(s)
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for all files
+* @owner
+
+# Source code
+src/* @owner
+
+# GitHub configuration and workflows
+.github/* @owner

@@ -1,0 +1,41 @@
+name: PR Quality Check
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  pr-check:
+    name: Validate PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check PR title follows Conventional Commits
+        env:
+          PR_TITLE: ${{ github.event.pull_request.title }}
+        run: |
+          echo "PR title: $PR_TITLE"
+          if echo "$PR_TITLE" | grep -qE '^(feat|fix|docs|chore|refactor|test|ci)(\(.+\))?!?: .+'; then
+            echo "✅ PR title follows Conventional Commits format."
+          else
+            echo "❌ PR title does not follow Conventional Commits format."
+            echo "Expected format: <type>(<scope>): <description>"
+            echo "Valid types: feat, fix, docs, chore, refactor, test, ci"
+            echo "Example: feat(auth): add JWT login support"
+            exit 1
+          fi
+
+      - name: Check PR has a description
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          if [ -z "$(echo "$PR_BODY" | tr -d '[:space:]')" ]; then
+            echo "❌ PR description is empty. Please add a description."
+            exit 1
+          else
+            echo "✅ PR has a description."
+          fi
