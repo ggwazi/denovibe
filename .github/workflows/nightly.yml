@@ -1,0 +1,70 @@
+name: Nightly Build
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+  issues: write
+jobs:
+  nightly:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+
+      - name: Type check
+        id: typecheck
+        run: deno check src/main.ts
+
+      - name: Lint
+        id: lint
+        run: deno lint
+
+      - name: Test with coverage
+        id: test
+        run: deno test --allow-net --allow-read --allow-env --coverage=cov_profile
+
+      - name: Generate coverage report
+        id: coverage
+        run: deno coverage cov_profile
+
+      - name: Benchmarks
+        id: bench
+        run: deno bench --allow-net --allow-read --allow-env
+
+      - name: Create failure issue
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const date = new Date().toISOString().slice(0, 10);
+            const steps = [
+              { name: 'Type check', outcome: '${{ steps.typecheck.outcome }}' },
+              { name: 'Lint',       outcome: '${{ steps.lint.outcome }}' },
+              { name: 'Test',       outcome: '${{ steps.test.outcome }}' },
+              { name: 'Coverage',   outcome: '${{ steps.coverage.outcome }}' },
+              { name: 'Benchmarks', outcome: '${{ steps.bench.outcome }}' },
+            ];
+            const failed = steps
+              .filter((s) => s.outcome === 'failure')
+              .map((s) => `- ❌ ${s.name}`)
+              .join('\n');
+            const body = [
+              `## 🌙 Nightly build failed on \`${date}\``,
+              '',
+              '### Failed steps',
+              failed,
+              '',
+              `**Run:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}`,
+            ].join('\n');
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🌙 Nightly build failed: ${date}`,
+              body,
+              labels: ['nightly', 'bug'],
+            });

@@ -13,5 +13,24 @@
   "deno.suggest.imports.hosts": {
     "https://jsr.io": true,
     "https://deno.land": true
-  }
+  },
+  "yaml.schemas": {
+    "./openapi.yml": [],
+    "./schemas/skill.schema.json": ".github/skills/*.yml",
+    "./schemas/agent.schema.json": "denovibe-agent.yml"
+  },
+  "json.schemas": [
+    {
+      "fileMatch": ["schemas/mcp-tool.schema.json"],
+      "url": "./schemas/mcp-tool.schema.json"
+    },
+    {
+      "fileMatch": ["schemas/skill.schema.json"],
+      "url": "./schemas/skill.schema.json"
+    },
+    {
+      "fileMatch": ["schemas/agent.schema.json"],
+      "url": "./schemas/agent.schema.json"
+    }
+  ]
 }

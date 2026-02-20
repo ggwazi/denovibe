@@ -1,0 +1,55 @@
+name: Lint All Files
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  statuses: write
+
+jobs:
+  lint-markdown:
+    name: Lint Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DavidAnson/markdownlint-cli2-action@v17
+        with:
+          config: .github/linters/.markdownlint.yml
+          globs: '**/*.md'
+
+  lint-yaml:
+    name: Lint YAML
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ibiqlik/action-yamllint@v3
+        with:
+          config_file: .github/linters/.yamllint.yml
+          file_or_dir: .
+          strict: false
+
+  lint-deno:
+    name: Lint Deno/TypeScript
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: .deno-cache
+          key: deno-${{ hashFiles('deno.lock') }}
+        env:
+          DENO_DIR: .deno-cache
+      - run: deno lint
+        env:
+          DENO_DIR: .deno-cache
+      - run: deno fmt --check
+        env:
+          DENO_DIR: .deno-cache

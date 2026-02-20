@@ -1,0 +1,27 @@
+# Markdownlint configuration
+default: true
+
+# Allow inline HTML
+MD033:
+  allowed_elements:
+    - details
+    - summary
+    - br
+
+# Line length - allow longer lines in code blocks and tables
+MD013:
+  line_length: 120
+  code_blocks: false
+  tables: false
+  headings: false
+
+# Allow multiple headings with the same content (e.g., in changelogs)
+MD024:
+  siblings_only: true
+
+# Ordered list item prefix — use ordered numbers
+MD029:
+  style: ordered
+
+# Allow bare URLs in certain contexts
+MD034: false

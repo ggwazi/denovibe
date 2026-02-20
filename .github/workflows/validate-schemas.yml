@@ -1,0 +1,42 @@
+name: Validate Schemas
+
+on:
+  push:
+    paths:
+      - '.github/skills/**'
+      - '.github/agents/**'
+      - 'schemas/**'
+      - 'openapi.yml'
+  pull_request:
+    paths:
+      - '.github/skills/**'
+      - '.github/agents/**'
+      - 'schemas/**'
+      - 'openapi.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-openapi:
+    name: Validate OpenAPI spec
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate OpenAPI schema
+        uses: char0n/swagger-editor-validate@v1
+        with:
+          definition-file: openapi.yml
+
+  validate-deno-types:
+    name: Validate Deno types
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.x
+      - name: Type-check all source
+        run: deno check src/main.ts src/mcp/server.ts src/agent/main.ts
+        env:
+          DENO_DIR: .deno-cache

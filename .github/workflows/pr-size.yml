@@ -1,0 +1,59 @@
+name: PR Size Label
+on:
+  pull_request:
+    types: [opened, synchronize]
+permissions:
+  pull-requests: write
+jobs:
+  label-size:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: pr } = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+            });
+
+            const lines = pr.additions + pr.deletions;
+
+            let size;
+            if (lines < 10) size = 'XS';
+            else if (lines < 50) size = 'S';
+            else if (lines < 200) size = 'M';
+            else if (lines < 500) size = 'L';
+            else size = 'XL';
+
+            const sizeLabels = ['size/XS', 'size/S', 'size/M', 'size/L', 'size/XL'];
+            const newLabel = `size/${size}`;
+
+            const { data: currentLabels } = await github.rest.issues.listLabelsOnIssue({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+
+            for (const label of currentLabels) {
+              if (sizeLabels.includes(label.name) && label.name !== newLabel) {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: context.issue.number,
+                  name: label.name,
+                });
+              }
+            }
+
+            const alreadyLabeled = currentLabels.some((l) => l.name === newLabel);
+            if (!alreadyLabeled) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: [newLabel],
+              });
+            }
+
+            console.log(`PR has ${lines} changed lines → labeled ${newLabel}`);

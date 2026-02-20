@@ -1,0 +1,34 @@
+name: Greet New Contributors
+on:
+  pull_request:
+    types: [opened]
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+  pull-requests: write
+jobs:
+  greet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          pr-message: |
+            👋 Thanks for your first pull request! Welcome to the project!
+
+            Here are a few things to help you get started:
+            - 📖 Please review our [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for contribution guidelines
+            - ✅ Make sure tests pass locally: `deno task test`
+            - 📋 Check that your PR follows our [PR template](.github/pull_request_template.md)
+
+            A maintainer will review your PR shortly. Thank you for contributing! 🎉
+          issue-message: |
+            👋 Thanks for opening your first issue! Welcome to the project!
+
+            To help us address it efficiently:
+            - 🔍 Please check if a similar issue already exists
+            - 📋 Use our [issue templates](.github/ISSUE_TEMPLATE/) when applicable
+            - 📖 Review [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md) for guidance
+
+            A maintainer will respond as soon as possible. Thank you! 🙏

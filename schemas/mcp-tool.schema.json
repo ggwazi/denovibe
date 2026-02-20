@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/ggwazi/denovibe/schemas/mcp-tool.schema.json",
+  "title": "MCP Tool Definition",
+  "description": "Schema for an MCP server tool definition",
+  "type": "object",
+  "required": ["name", "description", "inputSchema"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Tool name (snake_case)"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Human-readable tool description"
+    },
+    "inputSchema": {
+      "type": "object",
+      "required": ["type", "properties"],
+      "properties": {
+        "type": { "const": "object" },
+        "required": { "type": "array", "items": { "type": "string" } },
+        "properties": { "type": "object" }
+      }
+    }
+  },
+  "additionalProperties": false
+}

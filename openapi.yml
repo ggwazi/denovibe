@@ -1,0 +1,91 @@
+openapi: 3.1.0
+info:
+  title: denovibe API
+  version: 0.1.0
+  description: Deno 2 HTTP server — DevOps boilerplate template
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  contact:
+    url: https://github.com/ggwazi/denovibe
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://your-deployment-url.com
+    description: Production server
+
+paths:
+  /:
+    get:
+      summary: Homepage
+      description: Returns the HTML homepage
+      operationId: getHomepage
+      responses:
+        '200':
+          description: HTML homepage
+          content:
+            text/html:
+              schema:
+                type: string
+              example: '<html>...</html>'
+
+  /health:
+    get:
+      summary: Health check
+      description: Returns server health status and version
+      operationId: getHealth
+      responses:
+        '200':
+          description: Server is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+
+  /api/info:
+    get:
+      summary: Application info
+      description: Returns application name, version, and Deno runtime info
+      operationId: getInfo
+      responses:
+        '200':
+          description: Application info
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+
+components:
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status, version]
+      properties:
+        status:
+          type: string
+          enum: [ok]
+          example: ok
+        version:
+          type: string
+          example: '0.1.0'
+
+    InfoResponse:
+      type: object
+      required: [name, version, deno]
+      properties:
+        name:
+          type: string
+          example: denovibe
+        version:
+          type: string
+          example: '0.1.0'
+        deno:
+          type: object
+          properties:
+            version:
+              type: string
+            v8:
+              type: string
+            typescript:
+              type: string

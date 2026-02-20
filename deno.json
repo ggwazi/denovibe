@@ -13,9 +13,16 @@
     "agent": "deno run --allow-run --allow-env --allow-net --allow-read src/agent/main.ts"
   },
   "lint": {
-    "exclude": [".deno-cache/", "coverage/"],
+    "exclude": [".deno-cache/", "coverage/", "docs/"],
     "rules": {
-      "include": ["ban-untagged-todo", "no-throw-literal"]
+      "tags": ["recommended"],
+      "include": [
+        "ban-untagged-todo",
+        "no-throw-literal",
+        "explicit-function-return-type",
+        "guard-for-in"
+      ],
+      "exclude": []
     }
   },
   "fmt": {

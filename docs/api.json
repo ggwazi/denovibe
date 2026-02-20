@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "nodes": [
+    {
+      "name": "router",
+      "location": {
+        "filename": "file:///home/waz/workspace/denovibe/src/main.ts",
+        "line": 1,
+        "col": 0,
+        "byteIndex": 0
+      },
+      "declarationKind": "private",
+      "kind": "import",
+      "importDef": {
+        "src": "file:///home/waz/workspace/denovibe/src/router.ts",
+        "imported": "router"
+      }
+    }
+  ]
+}
