@@ -59,11 +59,11 @@ function dispatch(skillId: SkillId, args: ReturnType<typeof parseArgs>): Promise
     case 'deno-release': {
       const version = args['version'] as string | undefined;
       if (!version) {
-        return {
+        return Promise.resolve({
           success: false,
           output: 'Error: --version is required for deno-release',
           exitCode: 1,
-        };
+        });
       }
       return release(version, args['prerelease'] as boolean | undefined);
     }

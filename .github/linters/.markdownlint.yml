@@ -1,6 +1,16 @@
 # Markdownlint configuration
 default: true
 
+# Disable: first line must be h1 — too strict for templates, prompts, chatmodes
+MD041: false
+
+# Disable: emphasis used as heading — intentional in prompt/instruction files
+MD036: false
+
+# Disable: fenced code blocks surrounded by blank lines — list-embedded code blocks are exempt
+MD031:
+  list_items: false
+
 # Allow inline HTML
 MD033:
   allowed_elements:
