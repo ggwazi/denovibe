@@ -1,3 +1,4 @@
 .env
 .deno/
 coverage/
+.deno-cache/

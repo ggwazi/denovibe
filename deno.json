@@ -13,11 +13,13 @@
     "agent": "deno run --allow-run --allow-env --allow-net --allow-read src/agent/main.ts"
   },
   "lint": {
+    "exclude": [".deno-cache/", "coverage/"],
     "rules": {
       "include": ["ban-untagged-todo", "no-throw-literal"]
     }
   },
   "fmt": {
+    "exclude": [".deno-cache/", "coverage/"],
     "useTabs": false,
     "lineWidth": 100,
     "indentWidth": 2,
