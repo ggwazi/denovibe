@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/ggwazi/denovibe/compare/v1.0.0...v1.0.1) (2026-02-26)
+
+
+### Bug Fixes
+
+* use `deno task test` in nightly workflow to restore --allow-run permission ([7d59a65](https://github.com/ggwazi/denovibe/commit/7d59a65b2d2052d3fbfbcfc941041aed2a3d3dc3))
+* use deno task test in nightly workflow to include --allow-run permission ([26c131e](https://github.com/ggwazi/denovibe/commit/26c131e006ab248094f05e65a4095949af4b07be))
+
 ## 1.0.0 (2026-02-26)
 
 
