@@ -26,7 +26,7 @@ jobs:
 
       - name: Test with coverage
         id: test
-        run: deno test --allow-net --allow-read --allow-env --coverage=cov_profile
+        run: deno task test --coverage=cov_profile
 
       - name: Generate coverage report
         id: coverage
